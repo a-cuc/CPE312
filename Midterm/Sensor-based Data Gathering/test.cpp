@@ -1,10 +1,13 @@
 #include "DHT.h"
 
 #define DHTPIN 2
-#define DHTTYPE DHT22 
+#define DHTTYPE DHT22
+
 int counter = 0;
-float tempvals[10]; 
+float tempvals[10];
 float temphumid[10];
+float AverageHumidity = 0;
+float AverageTemperature = 0;
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -14,8 +17,6 @@ void setup() {
   //Serial.println("Humidity, \tTemp_C, \tLocation");
   Serial.println("Humidity, \tTemp_C");
 
-  
-  
   dht.begin();
 }
 
@@ -38,17 +39,31 @@ void loop() {
   Serial.print(h);
   Serial.print(", \t");
   Serial.print(t);
+
+  tempvals[counter] = t;
+  temphumid[counter] = h;
   counter++;
+
   if (counter == 10) {
-    for (int i=0; i<10; i++) {
-      // add code for averaging here
+    
+    for (int i = 0; i < 10; i++) 
+    {
+      AverageHumidity += temphumid[i];
+      AverageTemperature += tempvals[i];
     }
-  counter = 0;
+    AverageHumidity /= 10;
+    AverageTemperature /= 10;
+    counter = 0;
   }
 
-  //Code added is for Location
-  //Serial.print(", \t");
-  //Serial.print("Study_Area");
-  Serial.println();
+  Serial.print("Average Humidity is:");
+  Serial.print(AverageHumidity);
+  Serial.print(", \tAverage Temperature is:");
+  Serial.print(AverageTemperature);
 
+
+    //Code added is for Location
+    //Serial.print(", \t");
+    //Serial.print("Study_Area");
+    Serial.println();
 }
