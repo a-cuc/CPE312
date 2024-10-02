@@ -36,9 +36,9 @@ void loop() {
     return;
   }
 
-  Serial.print(h);
-  Serial.print(", \t");
-  Serial.print(t);
+  //Serial.print(h);
+  //Serial.print(", \t");
+  //Serial.print(t);
 
   tempvals[counter] = t;
   temphumid[counter] = h;
@@ -53,17 +53,21 @@ void loop() {
     }
     AverageHumidity /= 10;
     AverageTemperature /= 10;
+    //Serial.print("Average Humidity is:");
+    Serial.print(AverageHumidity);
+    Serial.print(", \t");
+    //Serial.print(", \tAverage Temperature is:");
+    Serial.print(AverageTemperature);
+    Serial.println();
+
+    memset(tempvals, 0, 10);
+    memset(temphumid, 0, 10);
+    AverageHumidity = 0;
+    AverageTemperature = 0;
     counter = 0;
   }
-
-  Serial.print("Average Humidity is:");
-  Serial.print(AverageHumidity);
-  Serial.print(", \tAverage Temperature is:");
-  Serial.print(AverageTemperature);
-
-
     //Code added is for Location
     //Serial.print(", \t");
     //Serial.print("Study_Area");
-    Serial.println();
+    //Serial.println();
 }
